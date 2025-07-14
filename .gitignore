@@ -1,0 +1,45 @@
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Cache do navegador
+.cache/
+
+# Arquivos temporários
+*.tmp
+*.temp
+~*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (caso use futuramente)
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Arquivos pessoais grandes (caso queira manter privados)
+# assets/private/
+
+# Arquivos de teste temporários
+test-output/
+temp-files/

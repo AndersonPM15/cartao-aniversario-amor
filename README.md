@@ -4,15 +4,26 @@ Um cartão de aniversário digital personalizado e interativo, desenvolvido com 
 
 ## 🚀 Como usar
 
-### Método 1: Servidor Python (Recomendado)
+### Método 1: GitHub Pages (Direto na Web) 🌐
+Acesse: [https://andersonpm15.github.io/cartao-aniversario-amor/](https://andersonpm15.github.io/cartao-aniversario-amor/)
+
+### Método 2: Clonar e executar localmente
 ```bash
-cd cartao-aniversario
+# Clonar o repositório
+git clone https://github.com/AndersonPM15/cartao-aniversario-amor.git
+
+# Entrar na pasta
+cd cartao-aniversario-amor
+
+# Executar servidor local
 python server.py
 ```
 Depois acesse: http://localhost:8000
 
-### Método 2: Arquivo direto
-Abra o arquivo `index.html` diretamente no navegador.
+### Método 3: Download direto
+1. Baixe o ZIP do repositório
+2. Extraia os arquivos
+3. Abra `index.html` no navegador
 
 ## 🎯 Funcionalidades
 
@@ -145,6 +156,24 @@ Se encontrar problemas:
 ## ❤️ Feito com Amor
 
 Este cartão foi desenvolvido especialmente para celebrar momentos especiais. Personalize-o com suas próprias memórias e torne-o único!
+
+## 🤝 Como Contribuir
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
+3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+
+## 🔗 Links Úteis
+
+- **Repositório**: [https://github.com/AndersonPM15/cartao-aniversario-amor](https://github.com/AndersonPM15/cartao-aniversario-amor)
+- **Demo Online**: [https://andersonpm15.github.io/cartao-aniversario-amor/](https://andersonpm15.github.io/cartao-aniversario-amor/)
+- **Issues**: [Reportar problemas](https://github.com/AndersonPM15/cartao-aniversario-amor/issues)
 
 ---
 
