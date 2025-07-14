@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste do Cartão</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background: #667eea;
+            color: white;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .photo-test {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Teste de Diagnóstico do Cartão de Aniversário</h1>
+    
+    <div class="test-section">
+        <h2>1. Teste de Música</h2>
+        <button onclick="testMusic()">🎵 Testar Música</button>
+        <p id="music-status">Status: Aguardando teste...</p>
+        <audio id="test-audio" controls>
+            <source src="assets/audio/nossa-musica.mp3" type="audio/mpeg">
+            <source src="assets/audio/nossa-musica.ogg" type="audio/ogg">
+            Seu navegador não suporta áudio.
+        </audio>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Teste de Imagens</h2>
+        <div id="images-container">
+            <img src="assets/images/foto1.jpg" alt="Foto 1" class="photo-test" onload="imageLoaded(1)" onerror="imageError(1)">
+            <img src="assets/images/foto2.jpg" alt="Foto 2" class="photo-test" onload="imageLoaded(2)" onerror="imageError(2)">
+            <img src="assets/images/foto3.jpg" alt="Foto 3" class="photo-test" onload="imageLoaded(3)" onerror="imageError(3)">
+        </div>
+        <p id="images-status">Status: Carregando imagens...</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Teste de JavaScript</h2>
+        <button onclick="testJS()">🔧 Testar Funções JS</button>
+        <p id="js-status">Status: Aguardando teste...</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Teste de Surpresa</h2>
+        <button onclick="testSurprise()">💕 Testar Surpresa</button>
+        <button onclick="createTestHearts()">❤️ Testar Corações</button>
+        <div id="surprise-content" class="hidden">
+            <h3>💕 Surpresa Funcionando!</h3>
+            <p>Se você vê isso, a função está funcionando!</p>
+        </div>
+    </div>
+
+    <script>
+        let imagesLoaded = 0;
+        let imagesTotal = 3;
+        
+        function testMusic() {
+            const audio = document.getElementById('test-audio');
+            const status = document.getElementById('music-status');
+            
+            if (audio.canPlayType('audio/mpeg')) {
+                status.innerHTML = '✅ Suporte a MP3 detectado. Tentando reproduzir...';
+                audio.play().then(() => {
+                    status.innerHTML = '✅ Música tocando com sucesso!';
+                }).catch(error => {
+                    status.innerHTML = '❌ Erro ao reproduzir: ' + error.message;
+                });
+            } else {
+                status.innerHTML = '❌ Navegador não suporta MP3';
+            }
+        }
+        
+        function imageLoaded(num) {
+            imagesLoaded++;
+            updateImageStatus();
+        }
+        
+        function imageError(num) {
+            const status = document.getElementById('images-status');
+            status.innerHTML += `❌ Erro ao carregar foto${num}.jpg `;
+        }
+        
+        function updateImageStatus() {
+            const status = document.getElementById('images-status');
+            if (imagesLoaded === imagesTotal) {
+                status.innerHTML = '✅ Todas as imagens carregadas com sucesso!';
+            } else {
+                status.innerHTML = `Carregadas: ${imagesLoaded}/${imagesTotal}`;
+            }
+        }
+        
+        function testJS() {
+            const status = document.getElementById('js-status');
+            try {
+                // Testar funcionalidades básicas
+                const testArray = [1, 2, 3];
+                const shuffled = testArray.sort(() => Math.random() - 0.5);
+                
+                // Testar localStorage
+                localStorage.setItem('test', 'funcionando');
+                const test = localStorage.getItem('test');
+                
+                if (test === 'funcionando') {
+                    status.innerHTML = '✅ JavaScript e localStorage funcionando!';
+                } else {
+                    status.innerHTML = '⚠️ Problema com localStorage';
+                }
+            } catch (error) {
+                status.innerHTML = '❌ Erro no JavaScript: ' + error.message;
+            }
+        }
+        
+        function testSurprise() {
+            const content = document.getElementById('surprise-content');
+            content.classList.toggle('hidden');
+        }
+        
+        function createTestHearts() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.style.position = 'fixed';
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.top = window.innerHeight + 'px';
+                    heart.style.fontSize = '2em';
+                    heart.style.zIndex = '9999';
+                    heart.style.pointerEvents = 'none';
+                    heart.style.transition = 'all 3s ease-out';
+                    
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.top = '-100px';
+                        heart.style.opacity = '0';
+                    }, 100);
+                    
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.remove();
+                        }
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+        
+        console.log('🧪 Teste de diagnóstico carregado!');
+    </script>
+</body>
+</html>

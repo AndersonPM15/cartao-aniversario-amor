@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Teste Final do Cartão</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .test-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .test-card h3 {
+            margin-top: 0;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(0,0,0,0.2);
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .warning { color: #ff9800; }
+        .info { color: #2196F3; }
+        .main-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 1.2em;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .main-btn:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Teste Final - Cartão Virtual Interativo</h1>
+        <p>Este teste verifica todas as funcionalidades do cartão de aniversário para garantir que está funcionando corretamente.</p>
+        
+        <a href="index.html" class="main-btn">🎂 Abrir Cartão de Aniversário</a>
+        
+        <div class="test-grid">
+            <!-- Teste de Arquivos -->
+            <div class="test-card">
+                <h3>📁 Arquivos</h3>
+                <button class="btn" onclick="testFiles()">Verificar Arquivos</button>
+                <div class="status" id="files-status">Clique para testar...</div>
+            </div>
+            
+            <!-- Teste de Música -->
+            <div class="test-card">
+                <h3>🎵 Áudio</h3>
+                <button class="btn" onclick="testAudio()">Testar Música</button>
+                <button class="btn" onclick="stopTestAudio()">Parar</button>
+                <div class="status" id="audio-status">Clique para testar...</div>
+                <audio id="test-audio" style="width: 100%; margin-top: 10px;" controls>
+                    <source src="assets/audio/nossa-musica.mp3" type="audio/mpeg">
+                    <source src="assets/audio/nossa-musica.ogg" type="audio/ogg">
+                </audio>
+            </div>
+            
+            <!-- Teste de Imagens -->
+            <div class="test-card">
+                <h3>🖼️ Imagens</h3>
+                <button class="btn" onclick="testImages()">Verificar Imagens</button>
+                <div class="status" id="images-status">Clique para testar...</div>
+                <div id="images-preview" style="margin-top: 10px;"></div>
+            </div>
+            
+            <!-- Teste de JavaScript -->
+            <div class="test-card">
+                <h3>⚙️ JavaScript</h3>
+                <button class="btn" onclick="testJavaScript()">Testar Funções</button>
+                <button class="btn" onclick="testLocalStorage()">Testar Storage</button>
+                <div class="status" id="js-status">Clique para testar...</div>
+            </div>
+            
+            <!-- Teste de Layout -->
+            <div class="test-card">
+                <h3>🎨 Layout</h3>
+                <button class="btn" onclick="testLayout()">Verificar CSS</button>
+                <button class="btn" onclick="testResponsive()">Responsivo</button>
+                <div class="status" id="layout-status">Clique para testar...</div>
+            </div>
+            
+            <!-- Teste de Compatibilidade -->
+            <div class="test-card">
+                <h3>🌐 Navegador</h3>
+                <button class="btn" onclick="testBrowser()">Verificar Suporte</button>
+                <div class="status" id="browser-status">Clique para testar...</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <h3>📋 Resultados do Teste</h3>
+            <div id="overall-results" class="status">
+                Execute os testes acima para ver os resultados gerais.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {
+            files: null,
+            audio: null,
+            images: null,
+            javascript: null,
+            layout: null,
+            browser: null
+        };
+        
+        function updateOverallResults() {
+            const results = Object.values(testResults);
+            const completed = results.filter(r => r !== null).length;
+            const passed = results.filter(r => r === true).length;
+            const failed = results.filter(r => r === false).length;
+            
+            const overallEl = document.getElementById('overall-results');
+            
+            if (completed === 0) {
+                overallEl.innerHTML = 'Execute os testes acima para ver os resultados gerais.';
+                overallEl.className = 'status';
+            } else if (completed < 6) {
+                overallEl.innerHTML = `📊 Progresso: ${completed}/6 testes executados (${passed} ✅, ${failed} ❌)`;
+                overallEl.className = 'status info';
+            } else if (failed === 0) {
+                overallEl.innerHTML = '🎉 Todos os testes passaram! O cartão está funcionando perfeitamente!';
+                overallEl.className = 'status success';
+            } else {
+                overallEl.innerHTML = `⚠️ ${failed} teste(s) falharam de ${completed}. Verifique os problemas acima.`;
+                overallEl.className = 'status warning';
+            }
+        }
+        
+        function testFiles() {
+            const status = document.getElementById('files-status');
+            status.innerHTML = '🔄 Verificando arquivos...';
+            
+            const requiredFiles = [
+                'css/style.css',
+                'js/script.js',
+                'assets/images/foto1.jpg',
+                'assets/images/foto2.jpg', 
+                'assets/images/foto3.jpg',
+                'assets/audio/nossa-musica.mp3'
+            ];
+            
+            let checkedFiles = 0;
+            let foundFiles = 0;
+            
+            requiredFiles.forEach(file => {
+                fetch(file, { method: 'HEAD' })
+                    .then(response => {
+                        checkedFiles++;
+                        if (response.ok) foundFiles++;
+                        
+                        if (checkedFiles === requiredFiles.length) {
+                            if (foundFiles === requiredFiles.length) {
+                                status.innerHTML = `✅ Todos os ${foundFiles} arquivos encontrados!`;
+                                status.className = 'status success';
+                                testResults.files = true;
+                            } else {
+                                status.innerHTML = `⚠️ ${foundFiles}/${requiredFiles.length} arquivos encontrados`;
+                                status.className = 'status warning';
+                                testResults.files = false;
+                            }
+                            updateOverallResults();
+                        }
+                    })
+                    .catch(() => {
+                        checkedFiles++;
+                        if (checkedFiles === requiredFiles.length) {
+                            status.innerHTML = `❌ ${foundFiles}/${requiredFiles.length} arquivos encontrados`;
+                            status.className = 'status error';
+                            testResults.files = false;
+                            updateOverallResults();
+                        }
+                    });
+            });
+        }
+        
+        function testAudio() {
+            const audio = document.getElementById('test-audio');
+            const status = document.getElementById('audio-status');
+            
+            status.innerHTML = '🔄 Testando áudio...';
+            
+            if (audio.canPlayType('audio/mpeg')) {
+                audio.play().then(() => {
+                    status.innerHTML = '✅ Áudio funcionando! (Tocando música de teste)';
+                    status.className = 'status success';
+                    testResults.audio = true;
+                    updateOverallResults();
+                }).catch(error => {
+                    status.innerHTML = `❌ Erro ao reproduzir: ${error.message}`;
+                    status.className = 'status error';
+                    testResults.audio = false;
+                    updateOverallResults();
+                });
+            } else {
+                status.innerHTML = '❌ Navegador não suporta MP3';
+                status.className = 'status error';
+                testResults.audio = false;
+                updateOverallResults();
+            }
+        }
+        
+        function stopTestAudio() {
+            const audio = document.getElementById('test-audio');
+            audio.pause();
+            audio.currentTime = 0;
+        }
+        
+        function testImages() {
+            const status = document.getElementById('images-status');
+            const preview = document.getElementById('images-preview');
+            
+            status.innerHTML = '🔄 Verificando imagens...';
+            preview.innerHTML = '';
+            
+            const images = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg'];
+            let loadedImages = 0;
+            let errorImages = 0;
+            
+            images.forEach((imgName, index) => {
+                const img = new Image();
+                img.style.width = '60px';
+                img.style.height = '60px';
+                img.style.objectFit = 'cover';
+                img.style.borderRadius = '8px';
+                img.style.margin = '2px';
+                
+                img.onload = function() {
+                    loadedImages++;
+                    preview.appendChild(img);
+                    checkImagesComplete();
+                };
+                
+                img.onerror = function() {
+                    errorImages++;
+                    const errorDiv = document.createElement('div');
+                    errorDiv.textContent = '❌';
+                    errorDiv.style.display = 'inline-block';
+                    errorDiv.style.width = '60px';
+                    errorDiv.style.height = '60px';
+                    errorDiv.style.lineHeight = '60px';
+                    errorDiv.style.textAlign = 'center';
+                    errorDiv.style.background = 'rgba(255,0,0,0.2)';
+                    errorDiv.style.borderRadius = '8px';
+                    errorDiv.style.margin = '2px';
+                    preview.appendChild(errorDiv);
+                    checkImagesComplete();
+                };
+                
+                img.src = `assets/images/${imgName}`;
+            });
+            
+            function checkImagesComplete() {
+                if (loadedImages + errorImages === images.length) {
+                    if (errorImages === 0) {
+                        status.innerHTML = `✅ Todas as ${loadedImages} imagens carregadas!`;
+                        status.className = 'status success';
+                        testResults.images = true;
+                    } else {
+                        status.innerHTML = `⚠️ ${loadedImages}/${images.length} imagens OK, ${errorImages} com erro`;
+                        status.className = 'status warning';
+                        testResults.images = false;
+                    }
+                    updateOverallResults();
+                }
+            }
+        }
+        
+        function testJavaScript() {
+            const status = document.getElementById('js-status');
+            
+            try {
+                // Testar funcionalidades básicas
+                const testArray = [1, 2, 3, 4, 5];
+                const shuffled = testArray.sort(() => Math.random() - 0.5);
+                
+                // Testar se as funções existem
+                const requiredFunctions = ['fetch', 'addEventListener', 'setTimeout', 'setInterval'];
+                const missingFunctions = requiredFunctions.filter(fn => typeof window[fn] === 'undefined');
+                
+                if (missingFunctions.length === 0) {
+                    status.innerHTML = '✅ JavaScript funcionando corretamente!';
+                    status.className = 'status success';
+                    testResults.javascript = true;
+                } else {
+                    status.innerHTML = `❌ Funções ausentes: ${missingFunctions.join(', ')}`;
+                    status.className = 'status error';
+                    testResults.javascript = false;
+                }
+            } catch (error) {
+                status.innerHTML = `❌ Erro no JavaScript: ${error.message}`;
+                status.className = 'status error';
+                testResults.javascript = false;
+            }
+            updateOverallResults();
+        }
+        
+        function testLocalStorage() {
+            const status = document.getElementById('js-status');
+            
+            try {
+                localStorage.setItem('test-cartao', 'funcionando');
+                const test = localStorage.getItem('test-cartao');
+                localStorage.removeItem('test-cartao');
+                
+                if (test === 'funcionando') {
+                    status.innerHTML = '✅ LocalStorage funcionando!';
+                    status.className = 'status success';
+                } else {
+                    status.innerHTML = '❌ Problema com LocalStorage';
+                    status.className = 'status error';
+                }
+            } catch (error) {
+                status.innerHTML = `❌ LocalStorage indisponível: ${error.message}`;
+                status.className = 'status error';
+            }
+        }
+        
+        function testLayout() {
+            const status = document.getElementById('layout-status');
+            
+            // Verificar se CSS básico está funcionando
+            const testEl = document.createElement('div');
+            testEl.style.display = 'flex';
+            testEl.style.transform = 'translateX(10px)';
+            testEl.style.borderRadius = '10px';
+            
+            if (getComputedStyle(testEl).display === 'flex') {
+                status.innerHTML = '✅ CSS moderno suportado!';
+                status.className = 'status success';
+                testResults.layout = true;
+            } else {
+                status.innerHTML = '❌ CSS moderno não suportado';
+                status.className = 'status error';
+                testResults.layout = false;
+            }
+            updateOverallResults();
+        }
+        
+        function testResponsive() {
+            const status = document.getElementById('layout-status');
+            const width = window.innerWidth;
+            
+            if (width < 480) {
+                status.innerHTML = `📱 Modo móvel detectado (${width}px)`;
+            } else if (width < 768) {
+                status.innerHTML = `📱 Modo tablet detectado (${width}px)`;
+            } else {
+                status.innerHTML = `🖥️ Modo desktop detectado (${width}px)`;
+            }
+            status.className = 'status info';
+        }
+        
+        function testBrowser() {
+            const status = document.getElementById('browser-status');
+            
+            const ua = navigator.userAgent;
+            let browser = 'Desconhecido';
+            
+            if (ua.includes('Chrome')) browser = 'Chrome';
+            else if (ua.includes('Firefox')) browser = 'Firefox';
+            else if (ua.includes('Safari')) browser = 'Safari';
+            else if (ua.includes('Edge')) browser = 'Edge';
+            
+            const features = {
+                'Flexbox': CSS.supports('display', 'flex'),
+                'Grid': CSS.supports('display', 'grid'),
+                'Transform': CSS.supports('transform', 'rotate(45deg)'),
+                'Audio': !!window.HTMLAudioElement,
+                'LocalStorage': !!window.localStorage,
+                'Fetch': !!window.fetch
+            };
+            
+            const supported = Object.values(features).filter(Boolean).length;
+            const total = Object.keys(features).length;
+            
+            if (supported === total) {
+                status.innerHTML = `✅ ${browser} - Totalmente compatível (${supported}/${total})`;
+                status.className = 'status success';
+                testResults.browser = true;
+            } else {
+                status.innerHTML = `⚠️ ${browser} - Parcialmente compatível (${supported}/${total})`;
+                status.className = 'status warning';
+                testResults.browser = false;
+            }
+            updateOverallResults();
+        }
+        
+        // Executar teste básico automaticamente
+        setTimeout(() => {
+            testBrowser();
+        }, 1000);
+        
+        console.log('🧪 Sistema de testes carregado!');
+        console.log('💡 Execute os testes para verificar a funcionalidade do cartão.');
+    </script>
+</body>
+</html>

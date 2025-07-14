@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Amor! 💕</title>
+    <meta name="description" content="Cartão virtual interativo de aniversário personalizado">
+    <meta name="author" content="Criado com amor">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Fontes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+</head>
+<body>
+    <!-- Partículas de fundo -->
+    <div class="particles-background" id="particlesBackground"></div>
+    
+    <!-- Tela de loading -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-heart">💕</div>
+        <p class="loading-text">Preparando algo especial...</p>
+    </div>
+
+    <!-- Container principal -->
+    <div class="container">
+        <div class="card" id="card">
+            <!-- Frente do cartão -->
+            <div class="card-front">
+                <!-- Decorações animadas -->
+                <div class="card-decoration">
+                    <div class="decoration-item">🎈</div>
+                    <div class="decoration-item">🎉</div>
+                    <div class="decoration-item">🎊</div>
+                    <div class="decoration-item">🎁</div>
+                </div>
+                
+                <h1 class="title" aria-label="Feliz Aniversário">
+                    <span class="title-word">Feliz</span>
+                    <span class="title-word">Aniversário!</span>
+                </h1>
+                
+                <div class="heart-animation" role="img" aria-label="Coração animado">❤️</div>
+                
+                <p class="subtitle">Para a pessoa mais especial da minha vida ❤️</p>
+                
+                <div class="birthday-cake">🎂</div>
+                
+                <button class="open-btn" onclick="openCard()" aria-label="Abrir cartão de aniversário">
+                    <span class="btn-text">Clique para abrir</span>
+                    <span class="btn-icon">💕</span>
+                </button>
+                
+                <div class="front-footer">
+                    <small>Feito com ❤️</small>
+                </div>
+            </div>
+            
+            <!-- Interior do cartão -->
+            <div class="card-inside hidden" role="main">
+                <div class="message-container">
+                    <!-- Texto animado -->
+                    <h2 class="animated-text" id="animatedText" aria-live="polite"></h2>
+                    
+                    <!-- Galeria de fotos -->
+                    <div class="photo-gallery">
+                        <div class="photo-item" onclick="openPhotoModal(0)">
+                            <img src="assets/images/foto1.jpg" alt="Nossa primeira foto juntos" class="photo" loading="lazy">
+                            <div class="photo-overlay">
+                                <span class="photo-caption">Nossa primeira foto 📸</span>
+                            </div>
+                        </div>
+                        <div class="photo-item" onclick="openPhotoModal(1)">
+                            <img src="assets/images/foto2.jpg" alt="Momento especial" class="photo" loading="lazy">
+                            <div class="photo-overlay">
+                                <span class="photo-caption">Momento especial 💕</span>
+                            </div>
+                        </div>
+                        <div class="photo-item" onclick="openPhotoModal(2)">
+                            <img src="assets/images/foto3.jpg" alt="Viagem inesquecível" class="photo" loading="lazy">
+                            <div class="photo-overlay">
+                                <span class="photo-caption">Viagem inesquecível ✈️</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal de fotos -->
+                    <div class="photo-modal hidden" id="photoModal" onclick="closePhotoModal()">
+                        <div class="modal-content" onclick="event.stopPropagation()">
+                            <button class="modal-close" onclick="closePhotoModal()" aria-label="Fechar modal">×</button>
+                            <img id="modalImage" src="" alt="" class="modal-image">
+                            <div class="modal-caption" id="modalCaption"></div>
+                            <div class="modal-navigation">
+                                <button onclick="previousPhoto()" class="nav-btn">‹ Anterior</button>
+                                <button onclick="nextPhoto()" class="nav-btn">Próxima ›</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Botões interativos -->
+                    <div class="interactive-buttons">
+                        <button onclick="showSurprise()" class="action-btn surprise-btn" aria-label="Ver surpresa especial">
+                            <span class="btn-icon">💕</span>
+                            <span class="btn-text">Surpresa Especial</span>
+                        </button>
+                        <button onclick="playMusic()" class="action-btn music-btn" aria-label="Tocar nossa música">
+                            <span class="btn-icon">🎵</span>
+                            <span class="btn-text">Nossa Música</span>
+                        </button>
+                        <button onclick="showTimeline()" class="action-btn timeline-btn" aria-label="Ver nossa história">
+                            <span class="btn-icon">📅</span>
+                            <span class="btn-text">Nossa História</span>
+                        </button>
+                        <button onclick="startQuiz()" class="action-btn quiz-btn" aria-label="Iniciar quiz do amor">
+                            <span class="btn-icon">🎯</span>
+                            <span class="btn-text">Quiz do Amor</span>
+                        </button>
+                        <button onclick="showCountdown()" class="action-btn countdown-btn" aria-label="Ver contador para próximo aniversário">
+                            <span class="btn-icon">⏰</span>
+                            <span class="btn-text">Próximo Aniversário</span>
+                        </button>
+                        <button onclick="showMemoryGame()" class="action-btn memory-btn" aria-label="Jogar jogo da memória">
+                            <span class="btn-icon">🧠</span>
+                            <span class="btn-text">Jogo da Memória</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Caixa de surpresa -->
+                <div class="surprise-box hidden" id="surpriseBox" role="dialog" aria-labelledby="surpriseTitle">
+                    <div class="surprise-content">
+                        <h3 id="surpriseTitle">💕 Mensagem Especial</h3>
+                        <div class="surprise-message">
+                            <p>Desde que você chegou na minha vida, tudo ficou mais colorido e especial. Você não é só meu namorado, é meu melhor amigo, meu companheiro de aventuras e meu amor para toda vida! 💕</p>
+                            <div class="surprise-quote">
+                                <blockquote>"O amor verdadeiro não é sobre ser inseparável; é sobre estar separado e nada mudar."</blockquote>
+                            </div>
+                        </div>
+                        <div class="floating-hearts" aria-hidden="true"></div>
+                        <div class="surprise-actions">
+                            <button onclick="generateLoveNote()" class="surprise-btn">💌 Gerar Bilhete</button>
+                            <button onclick="closeSurprise()" class="surprise-btn close-btn">❤️ Fechar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quiz do amor -->
+                <div class="quiz-container hidden" id="quizContainer" role="dialog" aria-labelledby="quizTitle">
+                    <div class="quiz-header">
+                        <h3 id="quizTitle">🎯 Quiz do Nosso Amor</h3>
+                        <button onclick="closeQuiz()" class="quiz-close" aria-label="Fechar quiz">×</button>
+                    </div>
+                    
+                    <div class="quiz-content">
+                        <div class="question-container">
+                            <div class="question-number" id="questionNumber">Pergunta 1</div>
+                            <p class="question" id="currentQuestion" aria-live="polite"></p>
+                            <div class="options" id="quizOptions" role="radiogroup"></div>
+                        </div>
+                        
+                        <div class="quiz-progress">
+                            <div class="progress-info">
+                                <span id="questionCounter">1/5</span>
+                                <span class="progress-percentage" id="progressPercentage">20%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-score hidden" id="quizScore">
+                            <div class="score-animation">🏆</div>
+                            <h4>Resultado:</h4>
+                            <p id="scoreText" class="score-message"></p>
+                            <div class="score-details" id="scoreDetails"></div>
+                            <div class="quiz-actions">
+                                <button onclick="restartQuiz()" class="quiz-btn restart-btn">🔄 Jogar Novamente</button>
+                                <button onclick="shareScore()" class="quiz-btn share-btn">📱 Compartilhar</button>
+                                <button onclick="closeQuiz()" class="quiz-btn close-btn">❌ Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline personalizada -->
+                <div class="timeline-container hidden" id="timelineContainer" role="dialog" aria-labelledby="timelineTitle">
+                    <div class="timeline-header">
+                        <h3 id="timelineTitle">📅 Nossa História de Amor</h3>
+                        <button onclick="closeTimeline()" class="timeline-close" aria-label="Fechar timeline">×</button>
+                    </div>
+                    
+                    <div class="timeline-content">
+                        <div class="timeline">
+                            <div class="timeline-item" data-date="2024-06">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-date">Junho 2024</div>
+                                <div class="timeline-content-item">
+                                    <div class="timeline-icon">💬</div>
+                                    <div class="timeline-text">Nos conhecemos em um grupo no WhatsApp</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" data-date="2024-06-22">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-date">22 de Junho 2024</div>
+                                <div class="timeline-content-item">
+                                    <div class="timeline-icon">🎵</div>
+                                    <div class="timeline-text">Show do Mumuzinho - e nunca mais nos largamos!</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" data-date="2024-08-04">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-date">4 de Agosto 2024</div>
+                                <div class="timeline-content-item">
+                                    <div class="timeline-icon">✈️</div>
+                                    <div class="timeline-text">Nossa primeira viagem juntos</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" data-date="2024-12-25">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-date">25 de Dezembro 2024</div>
+                                <div class="timeline-content-item">
+                                    <div class="timeline-icon">🎄</div>
+                                    <div class="timeline-text">Nosso primeiro Natal juntos</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item" data-date="2025-03-08">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-date">8 de Março 2025</div>
+                                <div class="timeline-content-item">
+                                    <div class="timeline-icon">🏙️</div>
+                                    <div class="timeline-text">Largamos tudo em SP e viemos conquistar o RJ</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item current" data-date="2025-07-15">
+                                <div class="timeline-marker current"></div>
+                                <div class="timeline-date">15 de Julho 2025</div>
+                                <div class="timeline-content-item">
+                                    <div class="timeline-icon">🎂</div>
+                                    <div class="timeline-text">Hoje - Seu aniversário - Te amo cada dia mais!</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">📅</div>
+                                <span class="stat-number" id="daysCounter">0</span>
+                                <span class="stat-label">dias juntos</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">⭐</div>
+                                <span class="stat-number">6</span>
+                                <span class="stat-label">momentos especiais</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">💕</div>
+                                <span class="stat-number">∞</span>
+                                <span class="stat-label">amor por você</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contador regressivo -->
+                <div class="countdown-container hidden" id="countdownContainer" role="dialog" aria-labelledby="countdownTitle">
+                    <div class="countdown-header">
+                        <h3 id="countdownTitle">⏰ Próximo Aniversário</h3>
+                        <button onclick="closeCountdown()" class="countdown-close" aria-label="Fechar contador">×</button>
+                    </div>
+                    
+                    <div class="countdown-content">
+                        <div class="countdown-message">
+                            <p>Contando os dias para celebrar você novamente! 🎉</p>
+                        </div>
+                        
+                        <div class="countdown-display">
+                            <div class="countdown-item">
+                                <div class="countdown-circle">
+                                    <span id="days" class="countdown-number">000</span>
+                                </div>
+                                <label class="countdown-label">Dias</label>
+                            </div>
+                            <div class="countdown-separator">:</div>
+                            <div class="countdown-item">
+                                <div class="countdown-circle">
+                                    <span id="hours" class="countdown-number">00</span>
+                                </div>
+                                <label class="countdown-label">Horas</label>
+                            </div>
+                            <div class="countdown-separator">:</div>
+                            <div class="countdown-item">
+                                <div class="countdown-circle">
+                                    <span id="minutes" class="countdown-number">00</span>
+                                </div>
+                                <label class="countdown-label">Minutos</label>
+                            </div>
+                            <div class="countdown-separator">:</div>
+                            <div class="countdown-item">
+                                <div class="countdown-circle">
+                                    <span id="seconds" class="countdown-number">00</span>
+                                </div>
+                                <label class="countdown-label">Segundos</label>
+                            </div>
+                        </div>
+                        
+                        <div class="countdown-actions">
+                            <button onclick="setReminder()" class="countdown-btn">🔔 Definir Lembrete</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jogo da Memória -->
+                <div class="memory-game-container hidden" id="memoryGameContainer" role="dialog" aria-labelledby="memoryTitle">
+                    <div class="memory-header">
+                        <h3 id="memoryTitle">🧠 Jogo da Memória do Amor</h3>
+                        <button onclick="closeMemoryGame()" class="memory-close" aria-label="Fechar jogo">×</button>
+                    </div>
+                    
+                    <div class="memory-content">
+                        <div class="memory-info">
+                            <div class="memory-stats">
+                                <span>Tentativas: <span id="attempts">0</span></span>
+                                <span>Pares: <span id="pairs">0/6</span></span>
+                                <span>Tempo: <span id="gameTime">00:00</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="memory-board" id="memoryBoard">
+                            <!-- Cards gerados dinamicamente -->
+                        </div>
+                        
+                        <div class="memory-actions">
+                            <button onclick="restartMemoryGame()" class="memory-btn">🔄 Reiniciar</button>
+                            <button onclick="closeMemoryGame()" class="memory-btn">❌ Fechar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Player de música -->
+    <div class="music-player hidden" id="musicPlayer">
+        <div class="player-info">
+            <span class="song-title">Nossa Música Especial 🎵</span>
+        </div>
+        <div class="player-controls">
+            <button onclick="toggleMusic()" class="player-btn" id="playPauseBtn">⏸️</button>
+            <button onclick="stopMusic()" class="player-btn">⏹️</button>
+            <div class="volume-control">
+                <input type="range" id="volumeSlider" min="0" max="100" value="50" onchange="changeVolume()">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Elemento de áudio -->
+    <audio id="backgroundMusic" loop preload="metadata">
+        <source src="assets/audio/nossa-musica.mp3" type="audio/mpeg">
+        <source src="assets/audio/nossa-musica.ogg" type="audio/ogg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+    
+    <!-- Botão de acessibilidade -->
+    <button class="accessibility-btn" onclick="toggleAccessibility()" aria-label="Alternar modo de acessibilidade">
+        ♿
+    </button>
+    
+    <!-- Container de notificações -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Script principal -->
+    <script src="js/script.js"></script>
+</body>
+</html>
